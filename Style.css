@@ -1,0 +1,8 @@
+@@font-face {
+  font-family: 'Product-sans';
+  url('/font/ProductSans-regular.ttf')  format('truetype');
+}
+
+*{
+  font-family: 'Product-sans','Montserrat', sans-serif;
+}
