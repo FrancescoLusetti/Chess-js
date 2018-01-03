@@ -1,24 +1,25 @@
-var Chess = function(T,C,X,Y){
+var Chess = function(T,C){
   this.type = T;
   this.color = C;
-  this.pos = {
-    x : X,
-    y : Y
-  };
-  this.y = Y;
-  this.getX = function(){return this.pos.x;}
-  this.getY = function(){return this.pos.y;}
-  this.setPos = function(nX,nY){this.pos.x = nX; this.pos.y = nY;}
 }
 
 function Game(){
-
+  //tabella 8*8
   this.gameTable= new array;
 
+  this.tableButtonPLay = '<button style="{z_z_z}" onclick="clickButton({y_y_y})" ><img src="xy"></button>';
+  this.HTMLelement = {
+    row: "<tr>",
+    rowE: "</tr>",
+    col: "<td>",
+    colE: "</td>",
+  };
+//ci vanno i source png in questa matrice
+  this.png = {
 
+  };
 
-
-  this.init
+  //this.init
 
 
 
