@@ -9,6 +9,9 @@ var Chess = function(T,C){
 }
 
 function Game(){
+  this.turn = 'b';
+  this.phase = false;
+  //false=first click; false=second click
   //tabella 8*8
 
   this.tableButtonPLay = '<button style="{z_z_z}" onclick="clickButton({y_y_y})" ><img src="xy"></button>';
@@ -54,8 +57,42 @@ function Game(){
       row[7] = new Chess(r,C);
     }
   }
+  this.createPlayGroundHtml{
+    for(let i = 0; i < this.getDim; i++){
+
+    }
 
 
+
+
+  }
+
+
+
+
+
+  this.ableGoing = function (X,Y){
+
+  }
+
+
+  this.play = function (X, Y) {
+    if(this.phase){
+      if(this.playGround[X][Y] == NULL) alert("Non c'é niente in questa casella");
+      else{
+        if(this.playGround[X][Y].getColor!=this.turn){
+          if(this.turn='b') alert("É il turno dei neri");
+          else alert("É il turno dei bianchi");
+        }
+        else{
+          phase=true;
+          
+        }
+      }
+    }
+
+
+  }
 
 
 }
@@ -69,7 +106,7 @@ function startGame(){
 
 a=0;
 
-turn=0;
-phase=0;
+
+
 
 window.onload = startGame(false);
