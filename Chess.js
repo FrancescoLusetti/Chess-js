@@ -1,4 +1,4 @@
-var Chess = function(T,C,I){
+﻿var Chess = function(T,C,I){
   this.type = T;
   this.color = C;
   this.img = I;
@@ -7,6 +7,11 @@ var Chess = function(T,C,I){
   this.getType = function() {return this.type;}
   this.getColor = function() {return this.color;}
   this.getImg = function () {return this.img;}
+
+  this.setType = function(nX) {this.type = nX;}
+  this.setColor = function(xX) {this.color = nX;}
+  this.setImg = function (Nx) {this.img = nX;}
+
 }
 
 var Game = function(){
@@ -68,9 +73,9 @@ var Game = function(){
     else{
       if(C=="b"){
         //TYPE ki=king,q=queen,r=rook,b=bishop,kn=knight,p=pawn
-        row[0] = new Chess('r',C ,this.png.br);
-        row[1] = new Chess('kn', C ,this.png.bkn);
-        row[2] = new Chess('b',C ,this.png.bb);
+        row[0] = new Chess('r',C , this.png.br );
+        row[1] = new Chess('kn', C , this.png.bkn );
+        row[2] = new Chess('b',C , this.png.bb );
         row[3] = new Chess('q', C ,this.png.bq);
         row[4] = new Chess('ki',C,this.png.bki);
         row[5] = new Chess('b',C,this.png.bb);
@@ -92,7 +97,7 @@ var Game = function(){
 
   this.getButton = function (X,Y) {
     if(this.playGround[X][Y]==-1) return this.tableButtonPLay.replace("{z_z_z}", ""+X+Y).replace("{x_x_x}", "").replace("{t_t_t}", "").replace("{y_y_y}", "board.play("+X+","+Y+")");
-    else return this.tableButtonPLay.replace("{z_z_z}", ""+X+Y).replace("{x_x_x}", this.playGround[X][Y].getImg).replace("{t_t_t}", this.playGround[X][Y].getType).replace("{y_y_y}", "board.play("+X+","+Y+")");
+    else return this.tableButtonPLay.replace("{z_z_z}", ""+X+Y).replace("{x_x_x}", this.playGround[X][Y].getImg()).replace("{t_t_t}", this.playGround[X][Y].getType()).replace("{y_y_y}", "board.play("+X+","+Y+")");
   }
 
 
