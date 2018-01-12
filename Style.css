@@ -8,11 +8,23 @@
 }
 
 .white {
-  background-color: white;
+  background-color: #d6d6d6;
+  z-index: -1;
 }
 
 .black {
-  background-color: black;
+  background-color: #3a3a3a;
+  z-index: -1;
+}
+
+input {
+  z-index: 1;
+
+}
+
+td{
+  height: 66;
+  width: 66;
 }
 
 body {

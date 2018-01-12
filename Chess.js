@@ -23,27 +23,27 @@ var Game = function(){
   this.remPos = new Array(-1, -1);
   //tabella 8*8
 
-  this.tableButtonPLay = '<input type="image" id="{z_z_z}" src="{x_x_x}" alt="{t_t_t}" onclick="{y_y_y}" width="50" height="50">';
+  this.tableButtonPLay = '<input type="image" src="{x_x_x}" alt="{t_t_t}" onclick="{y_y_y}" width="64" height="64">';
   this.HTMLelement = {
     row: "<tr>",
     rowE: "</tr>",
-    col: '<td class="{z_z_z}">',
+    col: '<td class="{z_z_z}" id="{y_y_y}">',
     colE: "</td>",
   };
 //ci vanno i source png in questa matrice
   this.png = {
-    bb: "/img/blackBishop.png",
-    bki: "/img/blackKing.png",
-    bkn: "/img/blackKnight.png",
-    bp: "/img/blackPawn.png",
-    bq: "/img/blackQueen.png",
-    br: "/img/blackRook.png",
-    wb: "/img/whiteBishop.png",
-    wki: "/img/whiteKing.png",
-    wkn: "/img/whiteKnight.png",
-    wp: "/img/whiteKnight.png",
-    wq: "/img/whiteQueen.png",
-    wr: "/img/whiteRook.png"
+    bb: "./img/bb.png",
+    bki: "./img/bki.png",
+    bkn: "./img/bkn.png",
+    bp: "./img/bp.png",
+    bq: "./img/bq.png",
+    br: "./img/br.png",
+    wb: "./img/wb.png",
+    wki: "./img/wki.png",
+    wkn: "./img/wkn.png",
+    wp: "./img/wp.png",
+    wq: "./img/wq.png",
+    wr: "./img/wr.png"
   };
 
   this.getDim = function () {
@@ -96,8 +96,8 @@ var Game = function(){
   }
 
   this.getButton = function (X,Y) {
-    if(this.playGround[X][Y]==-1) return this.tableButtonPLay.replace("{z_z_z}", ""+X+Y).replace("{x_x_x}", "").replace("{t_t_t}", "").replace("{y_y_y}", "board.play("+X+","+Y+")");
-    else return this.tableButtonPLay.replace("{z_z_z}", ""+X+Y).replace("{x_x_x}", this.playGround[X][Y].getImg()).replace("{t_t_t}", this.playGround[X][Y].getType()).replace("{y_y_y}", "board.play("+X+","+Y+")");
+    if(this.playGround[X][Y]==-1) return this.tableButtonPLay.replace("{x_x_x}", "").replace("{t_t_t}", "").replace("{y_y_y}", "board.play("+X+","+Y+")");
+    else return this.tableButtonPLay.replace("{x_x_x}", this.playGround[X][Y].getImg()).replace("{t_t_t}", this.playGround[X][Y].getType()).replace("{y_y_y}", "board.play("+X+","+Y+")");
   }
 
 
@@ -107,9 +107,9 @@ var Game = function(){
       tableString += this.HTMLelement.row;
       for(var j = 0; j < this.getDim(); j++){
         if((i%2==0 && j%2==0) || (i%2==1 && j%2==1))
-          tableString+=this.HTMLelement.col.replace("{z_z_z}","white")+this.getButton(i,j)+this.HTMLelement.colE;
+          tableString+=this.HTMLelement.col.replace("{z_z_z}","white").replace("{y_y_y}", ""+i+j)+this.getButton(i,j)+this.HTMLelement.colE;
         else
-          tableString+=this.HTMLelement.col.replace("{z_z_z}","black")+this.getButton(i,j)+this.HTMLelement.colE;
+          tableString+=this.HTMLelement.col.replace("{z_z_z}","black").replace("{y_y_y}", ""+i+j)+this.getButton(i,j)+this.HTMLelement.colE;
     }
         tableString+=this.HTMLelement.colE;
   }
@@ -123,20 +123,36 @@ var Game = function(){
 
   }
 
+  this.changePos = function (X,Y) {
+    this.playGround[X][Y] = this.playGround[this.remPos[0]][this.remPos[1]];
+    this.playGround[this.remPos[0]][this.remPos[1]] = -1;
+    document.getElementById(""+X+Y).innerHTML = this.getButton(X,Y);
+    document.getElementById(""+this.remPos[0]+this.remPos[1]).innerHTML = this.getButton(this.remPos[0],this.remPos[1]);
+  }
+
 
   this.play = function (X, Y) {
-    if(this.phase){
+    if(this.phase == false){
       if(this.playGround[X][Y] == -1) alert("Non c'é niente in questa casella");
       else{
-        if(this.playGround[X][Y].getColor!=this.turn){
-          if(this.turn='b') alert("É il turno dei neri");
+        if(this.playGround[X][Y].getColor()!=this.turn){
+          if(this.turn == 'b' ) alert("É il turno dei neri");
           else alert("É il turno dei bianchi");
         }
         else{
-          phase=true;
-
+          this.phase=true;
+          this.remPos[0]=X;
+          this.remPos[1]=Y;
         }
       }
+    }
+    else{
+        this.phase=false;
+        if(this.turn == 'b') this.turn='w';
+        else this.turn='b';
+        this.changePos(X,Y);
+        this.remPos[0]=-1;
+        this.remPos[1]=-1;
     }
 
 
