@@ -122,8 +122,11 @@ var Game = function(){
   this.ableGoing = function (X,Y){
     switch (this.playGround[this.remPos[0]][this.remPos[1]].getType()) {
       case "p":
-          if(this.turn=='n'){
-            if(this.remPos[0]==X && (this.remPos[1]==(Y+2)||this.remPos[1]==(Y+1))) return true;
+          if(this.turn=='b'){
+            if((this.remPos[1] == Y && (this.remPos[0]+1) == X) || (this.remPos[1] == Y && (this.remPos[0]+2) == X && this.remPos[0] == 1)) return true;
+          }
+          else {
+            if((this.remPos[1] == Y && (this.remPos[0]-1) == X) || (this.remPos[1] == Y && (this.remPos[0]-2) == X && this.remPos[0] == 6)) return true;
           }
 
         break;
@@ -143,6 +146,7 @@ var Game = function(){
     if(this.phase == false){
       if(this.playGround[X][Y] == -1) alert("Non c'é niente in questa casella");
       else{
+        console.log(X+", "+Y);
         if(this.playGround[X][Y].getColor()!=this.turn){
           if(this.turn == 'b' ) alert("É il turno dei neri");
           else alert("É il turno dei bianchi");
@@ -155,6 +159,7 @@ var Game = function(){
       }
     }
     else{
+      console.log(X+", "+Y);
       if(this.ableGoing(X,Y)){
         this.phase=false;
         if(this.turn == 'b') this.turn='w';
@@ -163,7 +168,7 @@ var Game = function(){
         this.remPos[0]=-1;
         this.remPos[1]=-1;
       }
-      alert("Non puoi andare qua");
+      else alert ("Non puoi andare qua");
     }
 
 
