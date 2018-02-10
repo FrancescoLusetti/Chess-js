@@ -164,7 +164,15 @@ this.positive = function(number){
       case 'b':
           if(this.positive(this.remPos[1]-Y)-this.positive(this.remPos[0]-X)==0) return true;
         break;
-      default: return true;
+      case 'q':
+          if((this.positive(this.remPos[1]-Y)-this.positive(this.remPos[0]-X)==0) || this.remPos[1] == Y || this.remPos[0] == X) return true;
+        break;
+      case 'kn':
+          if() return true;
+        break;
+      case 'ki':
+          if() return true;
+        break;
     }
   }
 
