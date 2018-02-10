@@ -23,6 +23,7 @@ var Game = function(){
   this.remPos = new Array(-1, -1);
   //tabella 8*8
 
+
   this.tableButtonPLay = '<input type="image" src="{x_x_x}" alt="{t_t_t}" onclick="{y_y_y}" width="64" height="64">';
   this.HTMLelement = {
     row: "<tr>",
@@ -117,7 +118,35 @@ var Game = function(){
   document.getElementById(this.tableId).innerHTML = tableString;
   }
 
+  this.checkWins = function(){
+    var checking = [8];
+    for (var i = 0; i < checking.length; i++) {
+      checking[i]=false;
+    }
+    for (var i = 0; i < this.getDim(); i++) {
+      for (var j = 0; j < this.getDim(); j++) {
+        if (!this.playGround[i][j]==-1){
+          this.remPos[1]=i;
+          this.remPos[0]=j;
+        }
+      }
+    }
+    this.remPos[1]=-1;
+    this.remPos[0]=-1;
+    if(checking[0]&&checking[1]&&checking[2]&&checking[3]&&checking[4]&&checking[5]&&checking[6]&&checking[7]) return true;
+    else return false;
+  }
 
+  this.clearPath = function(){
+
+
+
+  }
+
+this.positive = function(number){
+  if(number<0) return -number;
+  else return number;
+}
 
   this.ableGoing = function (X,Y){
     switch (this.playGround[this.remPos[0]][this.remPos[1]].getType()) {
@@ -128,7 +157,12 @@ var Game = function(){
           else {
             if((this.remPos[1] == Y && (this.remPos[0]-1) == X) || (this.remPos[1] == Y && (this.remPos[0]-2) == X && this.remPos[0] == 6)) return true;
           }
-
+        break;
+      case 'r':
+          if(this.remPos[1] == Y || this.remPos[0] == X /*&& this.clearPath(X,Y,this.playGround[this.remPos[0]][this.remPos[1]].getType())*/) return true;
+        break;
+      case 'b':
+          if(this.positive(this.remPos[1]-Y)-this.positive(this.remPos[0]-X)==0) return true;
         break;
       default: return true;
     }
