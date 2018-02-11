@@ -168,10 +168,10 @@ this.positive = function(number){
           if((this.positive(this.remPos[1]-Y)-this.positive(this.remPos[0]-X)==0) || this.remPos[1] == Y || this.remPos[0] == X) return true;
         break;
       case 'kn':
-          if() return true;
+          if(this.positive(this.remPos[1]-Y)+this.positive(this.remPos[0]-X)==3) return true;
         break;
       case 'ki':
-          if() return true;
+          if(this.positive(this.remPos[1]-Y)==1 || this.positive(this.remPos[0]-X)==1 || (this.positive(this.remPos[0]-X)==1 && this.positive(this.remPos[1]-Y)==1)) return true;
         break;
     }
   }
