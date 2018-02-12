@@ -23,8 +23,8 @@ input {
 }
 
 td{
-  height: 66;
-  width: 66;
+  height: 66px;
+  width: 66px;
 }
 
 body {
@@ -49,7 +49,8 @@ footer {
   text-align: center;
   padding: 15px;
   bottom: 0px;
-  margin-top: 8.7%;
+  width: 100%;
+  position: fixed;
 }
 
 #undo {
@@ -63,4 +64,9 @@ top: 45%;
 position: fixed;
 left: 80%;
 top: 50%;
+}
+
+#turn{
+  text-transform: uppercase;
+
 }

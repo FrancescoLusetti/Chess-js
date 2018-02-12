@@ -15,7 +15,7 @@
 }
 
 var Game = function(){
-  this.turn = 'b';
+  this.turn = 'w';
   this.phase = false;
   //false=first click; false=second click
   this.tableId = "TableGame";
@@ -52,6 +52,7 @@ var Game = function(){
   }
 
   this.init = function () {
+    document.getElementById("turn").innerHTML="turno bianco"
     this.playGround = new Array(8);
     for(var i = 0; i < this.getDim(); i++) this.playGround[i] = new Array(this.getDim());
     this.iniRow(this.playGround[0], false, 'b');
@@ -118,23 +119,41 @@ var Game = function(){
   document.getElementById(this.tableId).innerHTML = tableString;
   }
 
-  this.checkWins = function(){
-    var checking = [8];
-    for (var i = 0; i < checking.length; i++) {
-      checking[i]=false;
+  this.changeTurn = function() {
+    if(this.turn == 'b'){
+      this.turn='w';
+      document.getElementById("turn").innerHTML="turno bianco"
     }
+    else{
+      this.turn='b';
+      document.getElementById("turn").innerHTML="turno nero"
+    }
+  }
+
+  this.checkWins = function(){
+    let bwin=true;
+    let wwin=true;
     for (var i = 0; i < this.getDim(); i++) {
       for (var j = 0; j < this.getDim(); j++) {
-        if (!this.playGround[i][j]==-1){
-          this.remPos[1]=i;
-          this.remPos[0]=j;
+        if (this.playGround[i][j]!=-1 && this.playGround[i][j].getType()=='ki'){
+          if(this.playGround[i][j].getColor()=='b'){
+            bwin=false;
+          }
+          else{
+            wwin=false;
+          }
         }
       }
     }
-    this.remPos[1]=-1;
-    this.remPos[0]=-1;
-    if(checking[0]&&checking[1]&&checking[2]&&checking[3]&&checking[4]&&checking[5]&&checking[6]&&checking[7]) return true;
-    else return false;
+    if(bwin){
+      alert ("Il bianco ha vinto");
+      return true;
+    }
+    if(wwin){
+      alert ("Il nero ha vinto");
+      return true;
+    }
+    return false;
   }
 
   this.clearPath = function(){
@@ -204,13 +223,16 @@ this.positive = function(number){
       console.log(X+", "+Y);
       if(this.ableGoing(X,Y)){
         this.phase=false;
-        if(this.turn == 'b') this.turn='w';
-        else this.turn='b';
+        this.changeTurn();
+
         this.changePos(X,Y);
         this.remPos[0]=-1;
         this.remPos[1]=-1;
       }
       else alert ("Non puoi andare qua");
+      if(this.checkWins()) this.phase = true;
+
+
     }
 
 
@@ -222,6 +244,7 @@ this.positive = function(number){
 function startGame(){
   board = new Game();
   board.init();
+  document.getElementById('reset').addEventListener("click", function(){board.init();});
 }
 
 
