@@ -22,7 +22,8 @@ var Game = function(){
 
   this.remPos = new Array(-1, -1);
   //tabella 8*8
-
+  this.wKing = new Array(7, 4);
+  this.bKing = new Array(0,4);
 
   this.tableButtonPLay = '<input type="image" src="{x_x_x}" alt="{t_t_t}" onclick="{y_y_y}" width="64" height="64">';
   this.HTMLelement = {
@@ -130,31 +131,29 @@ var Game = function(){
     }
   }
 
-  this.checkWins = function(){
-    let bwin=true;
-    let wwin=true;
-    for (var i = 0; i < this.getDim(); i++) {
-      for (var j = 0; j < this.getDim(); j++) {
-        if (this.playGround[i][j]!=-1 && this.playGround[i][j].getType()=='ki'){
-          if(this.playGround[i][j].getColor()=='b'){
-            bwin=false;
-          }
-          else{
-            wwin=false;
-          }
-        }
-      }
-    }
-    if(bwin){
+  this.checkWins = function(X,Y){
+    if(X==this.wKing[0] && Y==this.wKing[1]){
       alert ("Il bianco ha vinto");
       return true;
     }
-    if(wwin){
+    if(X==this.bKing[0] && Y==this.bKing[1]){
       alert ("Il nero ha vinto");
       return true;
     }
     return false;
   }
+
+  this.check = function(X,Y) {
+    if(this.turn=='b'){
+      if(this.ableGoing(this.wKing[0],this.wKing[1])) alert("Scacco al re bianco");
+    }
+    else{
+      if(this.ableGoing(this.bKing[0],this.bKing[1])) alert("Scacco al re nero");
+    }
+    this.remPos[0]=-1;
+    this.remPos[1]=-1;
+  }
+
 
   this.clearPath = function(X,Y){
     if(this.remPos[0]==X){
@@ -303,15 +302,35 @@ this.positive = function(number){
     else{
       console.log(X+", "+Y);
       if(this.ableGoing(X,Y)){
+        console.log("a");
         this.phase=false;
-        this.changeTurn();
-
+        console.log("a");
+        if(this.turn == 'b'){
+          if (this.remPos[0]==this.bKing[0] && this.remPos[1]==this.bKing[1]) {
+            this.bKing[0]=X;
+            this.bKing[1]=Y;
+          }
+        }
+        else {
+          if (this.remPos[0]==this.wKing[0] && this.remPos[1]==this.wKing[1]) {
+            this.wKing[0]=X;
+            this.wKing[1]=Y;
+          }
+        }
+        console.log("a");
         this.changePos(X,Y);
-        this.remPos[0]=-1;
-        this.remPos[1]=-1;
+        console.log("a");
+        this.remPos[0]=X;
+        this.remPos[1]=Y;
+        console.log("a");
+        this.check(X,Y);
+        console.log("a");
+        this.changeTurn();
+        console.log("a");
+
       }
       else alert ("Non puoi andare qua");
-      if(this.checkWins()) this.phase = true;
+      if(this.checkWins(X,Y)) this.phase = true;
 
 
     }
