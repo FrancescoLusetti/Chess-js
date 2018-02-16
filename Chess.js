@@ -156,10 +156,24 @@ var Game = function(){
     return false;
   }
 
-  this.clearPath = function(){
-
-
-
+  this.clearPath = function(X,Y){
+    if(this.remPos[0]==X){
+      if(this.remPos[1]<Y){
+        for (var i = this.remPos[1]+1; i < Y; i++) {
+          if (this.playGround[X][i] != -1) {
+            return false;
+          }
+        }
+      }
+        else{
+          for (var i = Y+1; i < this.remPos[1]; i++) {
+            if (this.playGround[X][i] != -1) {
+              return false;
+            }
+        }
+      }
+    }
+    return true;
   }
 
 this.positive = function(number){
@@ -168,30 +182,35 @@ this.positive = function(number){
 }
 
   this.ableGoing = function (X,Y){
-    switch (this.playGround[this.remPos[0]][this.remPos[1]].getType()) {
-      case "p":
-          if(this.turn=='b'){
-            if((this.remPos[1] == Y && (this.remPos[0]+1) == X) || (this.remPos[1] == Y && (this.remPos[0]+2) == X && this.remPos[0] == 1)) return true;
-          }
-          else {
-            if((this.remPos[1] == Y && (this.remPos[0]-1) == X) || (this.remPos[1] == Y && (this.remPos[0]-2) == X && this.remPos[0] == 6)) return true;
-          }
-        break;
-      case 'r':
-          if(this.remPos[1] == Y || this.remPos[0] == X /*&& this.clearPath(X,Y,this.playGround[this.remPos[0]][this.remPos[1]].getType())*/) return true;
-        break;
-      case 'b':
-          if(this.positive(this.remPos[1]-Y)-this.positive(this.remPos[0]-X)==0) return true;
-        break;
-      case 'q':
-          if((this.positive(this.remPos[1]-Y)-this.positive(this.remPos[0]-X)==0) || this.remPos[1] == Y || this.remPos[0] == X) return true;
-        break;
-      case 'kn':
-          if(this.positive(this.remPos[1]-Y)+this.positive(this.remPos[0]-X)==3) return true;
-        break;
-      case 'ki':
-          if(this.positive(this.remPos[1]-Y)==1 || this.positive(this.remPos[0]-X)==1 || (this.positive(this.remPos[0]-X)==1 && this.positive(this.remPos[1]-Y)==1)) return true;
-        break;
+    if(this.playGround[X][Y]==-1 || this.playGround[X][Y].getColor()!=this.turn){
+      switch (this.playGround[this.remPos[0]][this.remPos[1]].getType()) {
+        case "p":
+            if(this.turn=='b'){
+              if((this.remPos[1] == Y && (this.remPos[0]+1) == X) || (this.remPos[1] == Y && (this.remPos[0]+2) == X && this.remPos[0] == 1 && this.playGround[X-1][Y]==-1) || ((this.remPos[0]+1) == X && this.positive(this.remPos[1]-Y)==1)) return true;
+            }
+            else {
+              if((this.remPos[1] == Y && (this.remPos[0]-1) == X) || (this.remPos[1] == Y && (this.remPos[0]-2) == X && this.remPos[0] == 6 && this.playGround[X+1][Y]==-1) || ((this.remPos[0]-1) == X && this.positive(this.remPos[1]-Y)==1)) return true;
+            }
+          break;
+        case 'r':
+            if(this.remPos[1] == Y || this.remPos[0] == X && this.clearPath(X,Y)) return true;
+          break;
+        case 'b':
+            if(this.positive(this.remPos[1]-Y)-this.positive(this.remPos[0]-X)==0) return true;
+          break;
+        case 'q':
+            if((this.positive(this.remPos[1]-Y)-this.positive(this.remPos[0]-X)==0) || this.remPos[1] == Y || this.remPos[0] == X) return true;
+          break;
+        case 'kn':
+            if(this.positive(this.remPos[1]-Y)+this.positive(this.remPos[0]-X)==3) return true;
+          break;
+        case 'ki':
+            if(this.positive(this.remPos[1]-Y)==1 || this.positive(this.remPos[0]-X)==1 || (this.positive(this.remPos[0]-X)==1 && this.positive(this.remPos[1]-Y)==1)) return true;
+          break;
+      }
+    }
+    else {
+      return false;
     }
   }
 
@@ -237,14 +256,17 @@ this.positive = function(number){
 
 
   }
-
+  this.reset = function(){
+    this.phase=0;
+  }
 
 }
 
 function startGame(){
   board = new Game();
   board.init();
-  document.getElementById('reset').addEventListener("click", function(){board.init();});
+  document.getElementById('reset').addEventListener("click", function(){board = new Game(); board.init();});
+  document.getElementById('undo').addEventListener("click", function(){board.reset();});
 }
 
 
