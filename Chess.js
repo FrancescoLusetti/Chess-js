@@ -165,14 +165,76 @@ var Game = function(){
           }
         }
       }
-        else{
-          for (var i = Y+1; i < this.remPos[1]; i++) {
-            if (this.playGround[X][i] != -1) {
-              return false;
-            }
+      else{
+        for (var i = Y+1; i < this.remPos[1]; i++) {
+          if (this.playGround[X][i] != -1) {
+            return false;
+          }
         }
       }
     }
+    else {
+      if(this.remPos[1]==Y){
+        if(this.remPos[0]<X){
+          for (var i = this.remPos[0]+1; i < X; i++){
+            if (this.playGround[i][Y] != -1) {
+              return false;
+            }
+          }
+        }
+        else{
+          for (var i = X+1; i < this.remPos[0]; i++){
+            if (this.playGround[i][Y] != -1) {
+              return false;
+            }
+          }
+        }
+      }
+      else{
+        if (this.remPos[0]<X) {
+          if (this.remPos[1]<Y) {
+            for (var i = this.remPos[0]+1; i < X; i++) {
+              for (var j = this.remPos[1]+1; j < Y; j++) {
+                if (this.playGround[i][j] != -1) {
+                  return false;
+                }
+              }
+            }
+          }
+          else {
+            for (var i = this.remPos[0]+1; i < X; i++) {
+              for (var j = Y+1; j < this.remPos[1]; j++) {
+                if (this.playGround[i][j] != -1) {
+                  return false;
+                }
+              }
+            }
+          }
+        }
+        else {
+          if (this.remPos[1]<Y) {
+            for (var i = X+1; i < this.remPos[0]; i++){
+              for (var j = this.remPos[1]+1; j < Y; j++) {
+                if (this.playGround[i][j] != -1) {
+                  return false;
+                }
+              }
+            }
+          }
+          else {
+            for (var i = X+1; i < this.remPos[0]; i++){
+              for (var j = Y+1; j < this.remPos[1]; j++) {
+                if (this.playGround[i][j] != -1) {
+                  return false;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+
     return true;
   }
 
@@ -193,13 +255,13 @@ this.positive = function(number){
             }
           break;
         case 'r':
-            if(this.remPos[1] == Y || this.remPos[0] == X && this.clearPath(X,Y)) return true;
+            if((this.remPos[1] == Y || this.remPos[0] == X) && this.clearPath(X,Y)) return true;
           break;
         case 'b':
-            if(this.positive(this.remPos[1]-Y)-this.positive(this.remPos[0]-X)==0) return true;
+            if((this.positive(this.remPos[1]-Y)-this.positive(this.remPos[0]-X)==0) && this.clearPath(X,Y)) return true;
           break;
         case 'q':
-            if((this.positive(this.remPos[1]-Y)-this.positive(this.remPos[0]-X)==0) || this.remPos[1] == Y || this.remPos[0] == X) return true;
+            if(((this.positive(this.remPos[1]-Y)-this.positive(this.remPos[0]-X)==0) || this.remPos[1] == Y || this.remPos[0] == X) && this.clearPath(X,Y)) return true;
           break;
         case 'kn':
             if(this.positive(this.remPos[1]-Y)+this.positive(this.remPos[0]-X)==3) return true;
