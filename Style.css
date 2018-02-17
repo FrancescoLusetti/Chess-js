@@ -8,12 +8,12 @@
 }
 
 .white {
-  background-color: #d6d6d6;
+  background-color: #ffbf80;
   z-index: -1;
 }
 
 .black {
-  background-color: #3a3a3a;
+  background-color: #663300;
   z-index: -1;
 }
 
@@ -36,6 +36,7 @@ table {
     width: 200px;
     margin-left: auto;
     margin-right: auto;
+
 }
 
 h1 {
@@ -43,7 +44,6 @@ h1 {
 }
 
 footer {
-  display: block;
   background-color: black;
   color: white;
   text-align: center;
@@ -53,20 +53,16 @@ footer {
   position: fixed;
 }
 
-#undo {
-text-align: center;
-position: fixed;
-left: 81.7%;
-top: 45%;
-}
-
-#reset {
-position: fixed;
-left: 80%;
-top: 50%;
-}
 
 #turn{
   text-transform: uppercase;
 
+}
+
+#buttons {
+  position: fixed;
+  top: 40%;
+  left: 75%;
+  padding: 5px;
+  text-align: center;
 }
