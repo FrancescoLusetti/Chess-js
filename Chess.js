@@ -133,11 +133,11 @@ var Game = function(){
 
   this.checkWins = function(X,Y){
     if(X==this.wKing[0] && Y==this.wKing[1]){
-      alert ("Il bianco ha vinto");
+      alert ("Il nero ha vinto");
       return true;
     }
     if(X==this.bKing[0] && Y==this.bKing[1]){
-      alert ("Il nero ha vinto");
+      alert ("Il biancio ha vinto");
       return true;
     }
     return false;
@@ -247,10 +247,10 @@ this.positive = function(number){
       switch (this.playGround[this.remPos[0]][this.remPos[1]].getType()) {
         case "p":
             if(this.turn=='b'){
-              if((this.remPos[1] == Y && (this.remPos[0]+1) == X) || (this.remPos[1] == Y && (this.remPos[0]+2) == X && this.remPos[0] == 1 && this.playGround[X-1][Y]==-1) || ((this.remPos[0]+1) == X && this.positive(this.remPos[1]-Y)==1)) return true;
+              if(((this.remPos[1] == Y && (this.remPos[0]+1) == X) && this.playGround[X][Y]==-1) || (this.remPos[1] == Y && (this.remPos[0]+2) == X && this.remPos[0] == 1 && this.playGround[X-1][Y]==-1) || ((this.remPos[0]+1) == X && this.positive(this.remPos[1]-Y)==1 && this.playGround[X][Y]!=-1)) return true;
             }
             else {
-              if((this.remPos[1] == Y && (this.remPos[0]-1) == X) || (this.remPos[1] == Y && (this.remPos[0]-2) == X && this.remPos[0] == 6 && this.playGround[X+1][Y]==-1) || ((this.remPos[0]-1) == X && this.positive(this.remPos[1]-Y)==1)) return true;
+              if(((this.remPos[1] == Y && (this.remPos[0]-1) == X) && this.playGround[X][Y]==-1) || (this.remPos[1] == Y && (this.remPos[0]-2) == X && this.remPos[0] == 6 && this.playGround[X+1][Y]==-1) || ((this.remPos[0]-1) == X && this.positive(this.remPos[1]-Y)==1 && this.playGround[X][Y]!=-1)) return true;
             }
           break;
         case 'r':
@@ -260,7 +260,7 @@ this.positive = function(number){
             if((this.positive(this.remPos[1]-Y)-this.positive(this.remPos[0]-X)==0) && this.clearPath(X,Y)) return true;
           break;
         case 'q':
-            if(((this.positive(this.remPos[1]-Y)-this.positive(this.remPos[0]-X)==0) || this.remPos[1] == Y || this.remPos[0] == X) && this.clearPath(X,Y)) return true;
+            if((((this.positive(this.remPos[1]-Y))-(this.positive(this.remPos[0]-X))==0) || this.remPos[1] == Y || this.remPos[0] == X) && this.clearPath(X,Y)) return true;
           break;
         case 'kn':
             if(this.positive(this.remPos[1]-Y)+this.positive(this.remPos[0]-X)==3) return true;
@@ -302,9 +302,11 @@ this.positive = function(number){
     else{
       console.log(X+", "+Y);
       if(this.ableGoing(X,Y)){
-        console.log("a");
         this.phase=false;
-        console.log("a");
+        this.changePos(X,Y);
+        this.remPos[0]=X;
+        this.remPos[1]=Y;
+        this.check(X,Y);
         if(this.turn == 'b'){
           if (this.remPos[0]==this.bKing[0] && this.remPos[1]==this.bKing[1]) {
             this.bKing[0]=X;
@@ -317,16 +319,7 @@ this.positive = function(number){
             this.wKing[1]=Y;
           }
         }
-        console.log("a");
-        this.changePos(X,Y);
-        console.log("a");
-        this.remPos[0]=X;
-        this.remPos[1]=Y;
-        console.log("a");
-        this.check(X,Y);
-        console.log("a");
         this.changeTurn();
-        console.log("a");
 
       }
       else alert ("Non puoi andare qua");
